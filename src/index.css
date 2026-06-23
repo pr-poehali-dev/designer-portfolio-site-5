@@ -92,13 +92,11 @@
 
 @layer base {
   :root {
-    --ink: 20 14% 8%;
-    --cream: 40 38% 95%;
-    --lime: 80 95% 55%;
-    --tangerine: 18 100% 58%;
-    --cobalt: 232 90% 60%;
-    --lilac: 268 80% 72%;
-    --hot: 330 95% 62%;
+    --ink: 30 8% 10%;
+    --paper: 40 30% 97%;
+    --accent: 18 95% 56%;
+    --soft: 36 24% 91%;
+    --muted-ink: 30 6% 42%;
   }
 
   * {
@@ -106,24 +104,32 @@
   }
 
   body {
-    @apply bg-background text-foreground font-sans antialiased;
-    background-color: hsl(var(--ink));
+    @apply text-foreground font-sans antialiased;
+    background-color: hsl(var(--paper));
+    color: hsl(var(--ink));
   }
 }
 
 @layer utilities {
-  .bento-card {
-    @apply relative overflow-hidden rounded-[28px] p-6 sm:p-7 transition-all duration-500 ease-out;
-    box-shadow: 0 1px 0 0 rgba(255, 255, 255, 0.06) inset;
+  .reveal {
+    opacity: 0;
+    transform: translateY(36px);
+    transition:
+      opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1),
+      transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
   }
-  .bento-card:hover {
-    transform: translateY(-6px);
+  .reveal.in {
+    opacity: 1;
+    transform: translateY(0);
   }
-  .grain {
-    background-image: radial-gradient(
-      rgba(0, 0, 0, 0.045) 1px,
-      transparent 1px
-    );
-    background-size: 4px 4px;
+  .link-underline {
+    background-image: linear-gradient(hsl(var(--accent)), hsl(var(--accent)));
+    background-size: 0% 2px;
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+    transition: background-size 0.4s ease;
+  }
+  .link-underline:hover {
+    background-size: 100% 2px;
   }
 }

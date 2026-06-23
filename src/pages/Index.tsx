@@ -1,212 +1,322 @@
+import { useEffect, useRef } from 'react';
 import Icon from '@/components/ui/icon';
 
-const HERO_IMG =
-  'https://cdn.poehali.dev/projects/d62806fd-b968-4116-8c13-a842d132dc5f/files/1be1eee8-d087-49fc-bdcf-e249966b58af.jpg';
+const PHOTO =
+  'https://cdn.poehali.dev/projects/d62806fd-b968-4116-8c13-a842d132dc5f/files/e10a4c04-197a-4964-9c4d-ba03ca29dad0.jpg';
 
-const projects = [
-  { title: 'Brand Identity', tag: 'Айдентика', color: 'hsl(var(--lime))', ink: true },
-  { title: 'Mobile App UI', tag: 'Интерфейсы', color: 'hsl(var(--cobalt))', ink: false },
-  { title: 'Editorial', tag: 'Полиграфия', color: 'hsl(var(--hot))', ink: false },
-  { title: '3D Visual', tag: 'Графика', color: 'hsl(var(--tangerine))', ink: true },
+const cases = [
+  {
+    img: 'https://cdn.poehali.dev/projects/d62806fd-b968-4116-8c13-a842d132dc5f/files/be6ae6f0-8973-4422-aeab-e01bc3eb6d0e.jpg',
+    title: 'B2B SaaS платформа',
+    tag: 'Веб-сервис · Дашборд',
+    desc: 'Полный редизайн интерфейса аналитики. Сократили время на ключевые сценарии на 40%.',
+  },
+  {
+    img: 'https://cdn.poehali.dev/projects/d62806fd-b968-4116-8c13-a842d132dc5f/files/164f2efb-f4df-4cc9-bf09-9027afb5b339.jpg',
+    title: 'Финтех-приложение',
+    tag: 'Мобильный продукт',
+    desc: 'Дизайн-система и UX для мобильного банка. Конверсия в регистрацию выросла в 1.8 раза.',
+  },
+  {
+    img: 'https://cdn.poehali.dev/projects/d62806fd-b968-4116-8c13-a842d132dc5f/files/b728ae0b-e516-4bf8-8389-b2890421a8c6.jpg',
+    title: 'E-commerce магазин',
+    tag: 'Интернет-магазин',
+    desc: 'Переработали путь покупателя и карточку товара. Средний чек увеличился на 22%.',
+  },
 ];
 
-const stack = ['Figma', 'Photoshop', 'Blender', 'After Effects', 'Illustrator', 'Cinema 4D'];
+const services = [
+  { icon: 'Search', title: 'UX-исследования', desc: 'Интервью, CJM, тестирование гипотез и поиск точек роста.' },
+  { icon: 'Layout', title: 'UI-дизайн', desc: 'Чистые, продающие интерфейсы для сайтов и приложений.' },
+  { icon: 'Component', title: 'Дизайн-системы', desc: 'Масштабируемые библиотеки компонентов в Figma.' },
+  { icon: 'TrendingUp', title: 'Продуктовый подход', desc: 'Решения, которые работают на метрики бизнеса.' },
+];
+
+const experience = [
+  { company: 'GlowByte', role: 'Product Designer', period: '2023 — н.в.' },
+  { company: 'Uplab', role: 'UX/UI дизайнер', period: '2021 — 2023' },
+  { company: 'MAX Agency', role: 'Веб-дизайнер', period: '2020 — 2021' },
+];
+
+const education = [
+  { title: 'Школа дизайна НИУ ВШЭ', sub: 'Коммуникационный дизайн', year: '2020' },
+  { title: 'Bang Bang Education', sub: 'UX/UI продвинутый курс', year: '2021' },
+  { title: 'Skillbox', sub: 'Профессия Product Designer', year: '2022' },
+];
+
+const reviews = [
+  {
+    text: 'Анна глубоко погружается в задачу и мыслит как продакт, а не просто рисует экраны. Результат превзошёл ожидания.',
+    name: 'Дмитрий К.',
+    role: 'CPO, IT-компания',
+  },
+  {
+    text: 'Сделала редизайн в срок, держала связь на каждом этапе. Метрики после релиза заметно выросли.',
+    name: 'Елена М.',
+    role: 'Маркетолог, B2B',
+  },
+];
+
+const useReveal = () => {
+  const ref = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const els = ref.current?.querySelectorAll('.reveal');
+    if (!els) return;
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            e.target.classList.add('in');
+            io.unobserve(e.target);
+          }
+        });
+      },
+      { threshold: 0.15 }
+    );
+    els.forEach((el) => io.observe(el));
+    return () => io.disconnect();
+  }, []);
+  return ref;
+};
 
 const Index = () => {
+  const ref = useReveal();
+  const ink = 'hsl(var(--ink))';
+  const accent = 'hsl(var(--accent))';
+
   return (
-    <div className="min-h-screen w-full" style={{ background: 'hsl(var(--ink))' }}>
-      <div className="mx-auto max-w-6xl px-4 py-6 sm:py-10">
-        {/* TOP BAR */}
-        <header className="mb-6 flex items-center justify-between animate-bento-in">
-          <span className="font-display text-lg font-extrabold tracking-tight text-[hsl(var(--cream))]">
-            ✦ NOVA<span className="text-[hsl(var(--lime))]">.</span>
-          </span>
+    <div ref={ref} className="min-h-screen" style={{ background: 'hsl(var(--paper))' }}>
+      {/* NAV */}
+      <header className="sticky top-0 z-50 border-b border-[hsl(var(--ink))]/10 bg-[hsl(var(--paper))]/80 backdrop-blur-md">
+        <div className="mx-auto flex max-w-6xl items-center justify-between px-5 py-4">
+          <span className="font-display text-base font-extrabold tracking-tight">Анна Палиивец</span>
+          <nav className="hidden gap-8 text-sm font-medium text-[hsl(var(--muted-ink))] md:flex">
+            <a href="#about" className="link-underline">Обо мне</a>
+            <a href="#cases" className="link-underline">Кейсы</a>
+            <a href="#education" className="link-underline">Образование</a>
+            <a href="#contacts" className="link-underline">Контакты</a>
+          </nav>
           <a
-            href="#"
-            className="rounded-full bg-[hsl(var(--cream))] px-5 py-2.5 font-display text-xs font-semibold uppercase tracking-wide text-[hsl(var(--ink))] transition-transform hover:scale-105"
+            href="#contacts"
+            className="rounded-full bg-[hsl(var(--ink))] px-5 py-2.5 text-sm font-semibold text-[hsl(var(--paper))] transition-transform hover:scale-105"
           >
-            Связаться
+            Написать
           </a>
-        </header>
+        </div>
+      </header>
 
-        {/* BENTO GRID */}
-        <main className="grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
-          {/* HERO / BIO */}
-          <section
-            className="bento-card col-span-2 row-span-2 grain flex flex-col justify-between animate-bento-in"
-            style={{ background: 'hsl(var(--cream))', animationDelay: '0.05s' }}
-          >
-            <div>
-              <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-[hsl(var(--ink))] px-3 py-1.5 text-[11px] font-semibold uppercase tracking-wider text-[hsl(var(--cream))]">
-                <span className="h-2 w-2 rounded-full bg-[hsl(var(--lime))]" />
-                Доступен для проектов
-              </div>
-              <h1 className="font-display text-4xl font-black leading-[0.95] tracking-tight text-[hsl(var(--ink))] sm:text-6xl">
-                Привет, я Анна —<br />
-                <span className="text-[hsl(var(--tangerine))]">дизайнер</span>
-              </h1>
+      {/* HERO */}
+      <section className="mx-auto max-w-6xl px-5 pb-16 pt-14 sm:pt-20">
+        <div className="grid items-center gap-10 lg:grid-cols-[1.2fr_1fr]">
+          <div className="reveal">
+            <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-[hsl(var(--ink))]/15 px-4 py-2 text-xs font-semibold uppercase tracking-wider text-[hsl(var(--muted-ink))]">
+              <span className="h-2 w-2 rounded-full" style={{ background: accent }} />
+              Открыта для проектов
             </div>
-            <p className="mt-6 max-w-md text-base leading-relaxed text-[hsl(var(--ink))]/70 sm:text-lg">
-              Создаю смелые визуальные системы, айдентику и интерфейсы. 6 лет превращаю
-              идеи брендов в запоминающийся дизайн.
+            <h1 className="font-display text-4xl font-black leading-[1.02] tracking-tight sm:text-6xl">
+              UX/UI дизайнер<br />
+              с <span style={{ color: accent }}>продуктовым</span><br />
+              подходом
+            </h1>
+            <p className="mt-6 max-w-md text-lg leading-relaxed text-[hsl(var(--muted-ink))]">
+              Работала с IT-консалтингом GlowByte, агентствами Uplab и MAX.
+              4+ года делаю сайты и приложения для B2B и B2C.
             </p>
-          </section>
-
-          {/* IMAGE TILE */}
-          <section
-            className="bento-card col-span-2 row-span-2 animate-bento-in p-0"
-            style={{ animationDelay: '0.1s' }}
-          >
-            <img src={HERO_IMG} alt="Работа" className="h-full w-full object-cover" />
-          </section>
-
-          {/* STAT */}
-          <section
-            className="bento-card animate-bento-in flex flex-col justify-between"
-            style={{ background: 'hsl(var(--cobalt))', animationDelay: '0.15s' }}
-          >
-            <Icon name="Sparkles" size={26} className="text-white" />
-            <div>
-              <div className="font-display text-4xl font-black text-white sm:text-5xl">120+</div>
-              <div className="text-sm text-white/70">проектов</div>
+            <div className="mt-8 flex flex-wrap gap-3">
+              <a
+                href="#cases"
+                className="rounded-full bg-[hsl(var(--ink))] px-7 py-3.5 text-sm font-semibold text-[hsl(var(--paper))] transition-transform hover:scale-105"
+              >
+                Смотреть кейсы
+              </a>
+              <a
+                href="#contacts"
+                className="rounded-full border border-[hsl(var(--ink))]/20 px-7 py-3.5 text-sm font-semibold transition-colors hover:bg-[hsl(var(--soft))]"
+              >
+                Обсудить задачу
+              </a>
             </div>
-          </section>
-
-          {/* SHOWREEL */}
-          <section
-            className="bento-card group animate-bento-in flex flex-col justify-between"
-            style={{ background: 'hsl(var(--lilac))', animationDelay: '0.2s' }}
-          >
-            <Icon
-              name="Play"
-              size={26}
-              className="text-[hsl(var(--ink))] transition-transform group-hover:scale-125"
-            />
-            <div>
-              <div className="font-display text-xl font-extrabold text-[hsl(var(--ink))]">
-                Шоурил 2026
-              </div>
-              <div className="text-sm text-[hsl(var(--ink))]/60">смотреть видео →</div>
+          </div>
+          <div className="reveal relative" style={{ transitionDelay: '0.15s' }}>
+            <div className="overflow-hidden rounded-[32px]" style={{ background: 'hsl(var(--soft))' }}>
+              <img src={PHOTO} alt="Анна Палиивец" className="aspect-[4/5] w-full object-cover" />
             </div>
-          </section>
-
-          {/* BEHANCE */}
-          <a
-            href="#"
-            className="bento-card group col-span-2 animate-bento-in flex items-center justify-between"
-            style={{ background: 'hsl(var(--lime))', animationDelay: '0.25s' }}
-          >
-            <div>
-              <div className="text-xs font-semibold uppercase tracking-wider text-[hsl(var(--ink))]/60">
-                Портфолио
-              </div>
-              <div className="font-display text-2xl font-black text-[hsl(var(--ink))] sm:text-3xl">
-                Behance
-              </div>
-            </div>
-            <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-[hsl(var(--ink))] text-[hsl(var(--cream))] transition-transform group-hover:rotate-12">
-              <Icon name="ArrowUpRight" size={28} />
-            </div>
-          </a>
-
-          {/* PROJECTS */}
-          {projects.map((p, i) => (
-            <a
-              key={p.title}
-              href="#"
-              className="bento-card group animate-bento-in flex flex-col justify-between"
-              style={{ background: p.color, animationDelay: `${0.3 + i * 0.05}s` }}
+            <div
+              className="absolute -bottom-5 -left-5 rounded-2xl px-6 py-4 shadow-xl"
+              style={{ background: accent }}
             >
-              <div
-                className={`text-xs font-semibold uppercase tracking-wider ${
-                  p.ink ? 'text-[hsl(var(--ink))]/60' : 'text-white/60'
-                }`}
-              >
-                {p.tag}
+              <div className="font-display text-2xl font-black text-white">50+</div>
+              <div className="text-xs font-medium text-white/90">проектов</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* STATS */}
+      <section id="about" className="border-y border-[hsl(var(--ink))]/10 bg-[hsl(var(--soft))]/40">
+        <div className="mx-auto grid max-w-6xl gap-8 px-5 py-14 sm:grid-cols-3">
+          {[
+            { num: '4+', label: 'года в дизайне' },
+            { num: '50+', label: 'реализованных проектов' },
+            { num: '12', label: 'довольных команд' },
+          ].map((s, i) => (
+            <div key={s.label} className="reveal" style={{ transitionDelay: `${i * 0.1}s` }}>
+              <div className="font-display text-5xl font-black" style={{ color: accent }}>{s.num}</div>
+              <div className="mt-2 text-[hsl(var(--muted-ink))]">{s.label}</div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* SERVICES */}
+      <section className="mx-auto max-w-6xl px-5 py-20">
+        <div className="reveal mb-12">
+          <span className="text-sm font-semibold uppercase tracking-wider" style={{ color: accent }}>Услуги</span>
+          <h2 className="mt-3 font-display text-3xl font-black tracking-tight sm:text-4xl">Чем могу помочь</h2>
+        </div>
+        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+          {services.map((s, i) => (
+            <div
+              key={s.title}
+              className="reveal rounded-3xl border border-[hsl(var(--ink))]/10 bg-white p-7 transition-shadow hover:shadow-lg"
+              style={{ transitionDelay: `${i * 0.08}s` }}
+            >
+              <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-2xl" style={{ background: 'hsl(var(--soft))' }}>
+                <Icon name={s.icon} size={22} style={{ color: ink }} />
               </div>
-              <div
-                className={`font-display mt-8 text-xl font-extrabold leading-tight ${
-                  p.ink ? 'text-[hsl(var(--ink))]' : 'text-white'
-                }`}
-              >
-                {p.title}
+              <h3 className="font-display text-lg font-bold">{s.title}</h3>
+              <p className="mt-2 text-sm leading-relaxed text-[hsl(var(--muted-ink))]">{s.desc}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* CASES */}
+      <section id="cases" className="mx-auto max-w-6xl px-5 py-20">
+        <div className="reveal mb-12">
+          <span className="text-sm font-semibold uppercase tracking-wider" style={{ color: accent }}>Портфолио</span>
+          <h2 className="mt-3 font-display text-3xl font-black tracking-tight sm:text-4xl">Избранные кейсы</h2>
+        </div>
+        <div className="space-y-6">
+          {cases.map((c, i) => (
+            <a
+              key={c.title}
+              href="#"
+              className="reveal group grid gap-6 overflow-hidden rounded-[32px] border border-[hsl(var(--ink))]/10 bg-white transition-shadow hover:shadow-xl md:grid-cols-2"
+            >
+              <div className="overflow-hidden" style={{ background: 'hsl(var(--soft))' }}>
+                <img
+                  src={c.img}
+                  alt={c.title}
+                  className={`aspect-[16/11] h-full w-full object-cover transition-transform duration-700 group-hover:scale-105 ${i % 2 ? 'md:order-2' : ''}`}
+                />
               </div>
-              <Icon
-                name="ArrowRight"
-                size={20}
-                className={`mt-3 transition-transform group-hover:translate-x-1 ${
-                  p.ink ? 'text-[hsl(var(--ink))]' : 'text-white'
-                }`}
-              />
+              <div className="flex flex-col justify-center p-8 sm:p-10">
+                <span className="text-xs font-semibold uppercase tracking-wider text-[hsl(var(--muted-ink))]">{c.tag}</span>
+                <h3 className="mt-3 font-display text-2xl font-black sm:text-3xl">{c.title}</h3>
+                <p className="mt-4 leading-relaxed text-[hsl(var(--muted-ink))]">{c.desc}</p>
+                <span className="mt-6 inline-flex items-center gap-2 text-sm font-semibold" style={{ color: accent }}>
+                  Открыть кейс
+                  <Icon name="ArrowRight" size={16} className="transition-transform group-hover:translate-x-1" />
+                </span>
+              </div>
             </a>
           ))}
+        </div>
+      </section>
 
-          {/* SOCIAL LINKS */}
-          <section
-            className="bento-card col-span-2 animate-bento-in flex flex-col justify-between"
-            style={{ background: 'hsl(var(--cream))', animationDelay: '0.5s' }}
-          >
-            <div className="text-xs font-semibold uppercase tracking-wider text-[hsl(var(--ink))]/60">
-              Соцсети
-            </div>
-            <div className="mt-5 flex flex-wrap gap-3">
-              {[
-                { icon: 'Instagram', label: 'Instagram' },
-                { icon: 'Send', label: 'Telegram' },
-                { icon: 'Dribbble', label: 'Dribbble' },
-                { icon: 'Mail', label: 'Email' },
-              ].map((s) => (
-                <a
-                  key={s.label}
-                  href="#"
-                  className="flex items-center gap-2 rounded-full bg-[hsl(var(--ink))] px-4 py-2.5 text-sm font-medium text-[hsl(var(--cream))] transition-transform hover:scale-105"
-                >
-                  <Icon name={s.icon} size={16} />
-                  {s.label}
-                </a>
+      {/* EXPERIENCE + EDUCATION */}
+      <section id="education" className="border-y border-[hsl(var(--ink))]/10 bg-[hsl(var(--soft))]/40">
+        <div className="mx-auto grid max-w-6xl gap-14 px-5 py-20 lg:grid-cols-2">
+          <div className="reveal">
+            <span className="text-sm font-semibold uppercase tracking-wider" style={{ color: accent }}>Опыт</span>
+            <h2 className="mb-8 mt-3 font-display text-3xl font-black tracking-tight">Где работала</h2>
+            <div className="space-y-1">
+              {experience.map((e) => (
+                <div key={e.company} className="flex items-center justify-between border-b border-[hsl(var(--ink))]/10 py-5">
+                  <div>
+                    <div className="font-display text-lg font-bold">{e.company}</div>
+                    <div className="text-sm text-[hsl(var(--muted-ink))]">{e.role}</div>
+                  </div>
+                  <span className="text-sm font-medium text-[hsl(var(--muted-ink))]">{e.period}</span>
+                </div>
               ))}
             </div>
-          </section>
-
-          {/* TOOLS */}
-          <section
-            className="bento-card col-span-2 animate-bento-in flex flex-col justify-between"
-            style={{ background: 'hsl(var(--tangerine))', animationDelay: '0.55s' }}
-          >
-            <div className="text-xs font-semibold uppercase tracking-wider text-white/70">
-              Инструменты
-            </div>
-            <div className="mt-5 flex flex-wrap gap-2">
-              {stack.map((t) => (
-                <span
-                  key={t}
-                  className="rounded-full border border-white/30 px-3 py-1.5 text-sm font-medium text-white"
-                >
-                  {t}
-                </span>
+          </div>
+          <div className="reveal" style={{ transitionDelay: '0.15s' }}>
+            <span className="text-sm font-semibold uppercase tracking-wider" style={{ color: accent }}>Образование</span>
+            <h2 className="mb-8 mt-3 font-display text-3xl font-black tracking-tight">Курсы и обучение</h2>
+            <div className="space-y-1">
+              {education.map((e) => (
+                <div key={e.title} className="flex items-center justify-between border-b border-[hsl(var(--ink))]/10 py-5">
+                  <div>
+                    <div className="font-display text-lg font-bold">{e.title}</div>
+                    <div className="text-sm text-[hsl(var(--muted-ink))]">{e.sub}</div>
+                  </div>
+                  <span className="text-sm font-medium text-[hsl(var(--muted-ink))]">{e.year}</span>
+                </div>
               ))}
             </div>
-          </section>
-        </main>
+          </div>
+        </div>
+      </section>
 
-        {/* MARQUEE FOOTER */}
-        <footer className="mt-3 overflow-hidden rounded-[28px] bg-[hsl(var(--cobalt))] py-5 sm:mt-4">
-          <div className="flex w-max animate-marquee whitespace-nowrap">
-            {Array.from({ length: 2 }).map((_, i) => (
-              <span
-                key={i}
-                className="font-display text-2xl font-black uppercase tracking-tight text-white sm:text-3xl"
+      {/* REVIEWS */}
+      <section className="mx-auto max-w-6xl px-5 py-20">
+        <div className="reveal mb-12">
+          <span className="text-sm font-semibold uppercase tracking-wider" style={{ color: accent }}>Отзывы</span>
+          <h2 className="mt-3 font-display text-3xl font-black tracking-tight sm:text-4xl">Что говорят клиенты</h2>
+        </div>
+        <div className="grid gap-6 md:grid-cols-2">
+          {reviews.map((r, i) => (
+            <div
+              key={r.name}
+              className="reveal rounded-[32px] border border-[hsl(var(--ink))]/10 bg-white p-8 sm:p-10"
+              style={{ transitionDelay: `${i * 0.1}s` }}
+            >
+              <Icon name="Quote" size={32} style={{ color: accent }} />
+              <p className="mt-5 text-lg leading-relaxed">{r.text}</p>
+              <div className="mt-6">
+                <div className="font-display font-bold">{r.name}</div>
+                <div className="text-sm text-[hsl(var(--muted-ink))]">{r.role}</div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* CONTACTS / CTA */}
+      <section id="contacts" className="mx-auto max-w-6xl px-5 pb-20">
+        <div className="reveal overflow-hidden rounded-[40px] px-8 py-16 text-center sm:px-16" style={{ background: ink }}>
+          <h2 className="font-display text-3xl font-black tracking-tight text-[hsl(var(--paper))] sm:text-5xl">
+            Давайте сделаем<br />
+            <span style={{ color: accent }}>сильный продукт</span>
+          </h2>
+          <p className="mx-auto mt-5 max-w-md text-[hsl(var(--paper))]/70">
+            Расскажите о задаче — отвечу в течение дня и предложу решение.
+          </p>
+          <div className="mt-9 flex flex-wrap justify-center gap-3">
+            {[
+              { icon: 'Send', label: 'Telegram' },
+              { icon: 'Mail', label: 'Email' },
+              { icon: 'Briefcase', label: 'Behance' },
+            ].map((c) => (
+              <a
+                key={c.label}
+                href="#"
+                className="inline-flex items-center gap-2 rounded-full bg-[hsl(var(--paper))] px-6 py-3.5 text-sm font-semibold text-[hsl(var(--ink))] transition-transform hover:scale-105"
               >
-                Открыта для сотрудничества&nbsp;✦&nbsp;Брендинг&nbsp;✦&nbsp;UI/UX&nbsp;✦&nbsp;3D&nbsp;✦&nbsp;
-              </span>
+                <Icon name={c.icon} size={18} />
+                {c.label}
+              </a>
             ))}
           </div>
-        </footer>
+        </div>
+      </section>
 
-        <p className="mt-6 text-center text-xs text-[hsl(var(--cream))]/40">
-          © 2026 Анна Нова — дизайнер
-        </p>
-      </div>
+      <footer className="border-t border-[hsl(var(--ink))]/10 py-8 text-center text-sm text-[hsl(var(--muted-ink))]">
+        © 2026 Анна Палиивец · UX/UI дизайнер
+      </footer>
     </div>
   );
 };

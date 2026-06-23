@@ -20,7 +20,7 @@ export default {
 		extend: {
 			fontFamily: {
 				display: ['Unbounded', 'sans-serif'],
-				sans: ['Golos Text', 'sans-serif'],
+				sans: ['Manrope', 'sans-serif'],
 			},
 			colors: {
 				border: 'hsl(var(--border))',
