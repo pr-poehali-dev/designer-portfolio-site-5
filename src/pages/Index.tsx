@@ -7,7 +7,7 @@ const scrollTo = (id: string) => {
   const top = el.getBoundingClientRect().top + window.scrollY - 72;
   const start = window.scrollY;
   const dist = top - start;
-  const duration = 900;
+  const duration = 300;
   let startTime: number | null = null;
 
   const ease = (t: number) => t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
