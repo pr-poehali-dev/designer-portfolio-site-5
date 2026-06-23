@@ -261,13 +261,15 @@ const Index = () => {
           </p>
           <div className="mt-9 flex flex-wrap justify-center gap-3">
             {[
-              { icon: 'Send', label: 'Telegram' },
-              { icon: 'Mail', label: 'Email' },
-              { icon: 'Briefcase', label: 'Behance' },
+              { icon: 'Send', label: 'Telegram', href: 'https://t.me/badbox' },
+              { icon: 'Mail', label: 'Email', href: 'mailto:badbox-x@yandex.ru' },
+              { icon: 'Briefcase', label: 'Behance', href: 'https://www.behance.net/b619f6e9' },
             ].map((c) => (
               <a
                 key={c.label}
-                href="#"
+                href={c.href}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 rounded-full bg-[hsl(var(--paper))] px-6 py-3.5 text-sm font-semibold text-[hsl(var(--ink))] transition-transform hover:scale-105"
               >
                 <Icon name={c.icon} size={18} />
