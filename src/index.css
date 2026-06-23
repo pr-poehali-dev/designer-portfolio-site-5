@@ -97,11 +97,14 @@ html {
 
 @layer base {
   :root {
-    --ink: 30 8% 10%;
-    --paper: 40 30% 97%;
-    --accent: 18 95% 56%;
-    --soft: 36 24% 91%;
-    --muted-ink: 30 6% 42%;
+    --bg: 224 20% 6%;
+    --surface: 224 18% 10%;
+    --card-bg: 224 16% 13%;
+    --accent: 220 100% 60%;
+    --accent2: 200 100% 55%;
+    --ink: 210 20% 96%;
+    --muted-ink: 220 12% 55%;
+    --border-c: 220 18% 20%;
   }
 
   * {
@@ -109,32 +112,129 @@ html {
   }
 
   body {
-    @apply text-foreground font-sans antialiased;
-    background-color: hsl(var(--paper));
+    @apply font-sans antialiased;
+    background-color: hsl(var(--bg));
     color: hsl(var(--ink));
+  }
+}
+
+/* Анимированная сетка на фоне */
+.bg-grid {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background-image:
+    linear-gradient(hsl(var(--border-c) / 0.5) 1px, transparent 1px),
+    linear-gradient(90deg, hsl(var(--border-c) / 0.5) 1px, transparent 1px);
+  background-size: 60px 60px;
+  mask-image: radial-gradient(
+    ellipse 80% 60% at 50% 0%,
+    black 30%,
+    transparent 100%
+  );
+}
+
+/* Пятна-градиенты */
+.bg-glow-1 {
+  position: fixed;
+  top: -20vh;
+  left: -10vw;
+  width: 60vw;
+  height: 60vw;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    hsl(var(--accent) / 0.15) 0%,
+    transparent 70%
+  );
+  pointer-events: none;
+  z-index: 0;
+  animation: glow-drift 12s ease-in-out infinite alternate;
+}
+.bg-glow-2 {
+  position: fixed;
+  bottom: -10vh;
+  right: -10vw;
+  width: 50vw;
+  height: 50vw;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    hsl(var(--accent2) / 0.12) 0%,
+    transparent 70%
+  );
+  pointer-events: none;
+  z-index: 0;
+  animation: glow-drift 16s ease-in-out infinite alternate-reverse;
+}
+
+@keyframes glow-drift {
+  from {
+    transform: translate(0, 0) scale(1);
+  }
+  to {
+    transform: translate(4vw, 6vh) scale(1.15);
   }
 }
 
 @layer utilities {
   .reveal {
     opacity: 0;
-    transform: translateY(20px);
+    transform: translateY(24px);
     transition:
-      opacity 1.1s cubic-bezier(0.16, 1, 0.3, 1),
-      transform 1.1s cubic-bezier(0.16, 1, 0.3, 1);
+      opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+      transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
   }
   .reveal.in {
     opacity: 1;
     transform: translateY(0);
   }
+
   .link-underline {
     background-image: linear-gradient(hsl(var(--accent)), hsl(var(--accent)));
-    background-size: 0% 2px;
+    background-size: 0% 1.5px;
     background-position: 0 100%;
     background-repeat: no-repeat;
-    transition: background-size 0.4s ease;
+    transition: background-size 0.35s ease;
   }
   .link-underline:hover {
-    background-size: 100% 2px;
+    background-size: 100% 1.5px;
+  }
+
+  .card-hover {
+    transition:
+      transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+      box-shadow 0.4s ease,
+      border-color 0.3s ease;
+  }
+  .card-hover:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 24px 60px hsl(var(--accent) / 0.15);
+    border-color: hsl(var(--accent) / 0.4);
+  }
+
+  .accent-tag {
+    display: inline-block;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: hsl(var(--accent));
+    background: hsl(var(--accent) / 0.12);
+    border: 1px solid hsl(var(--accent) / 0.25);
+    border-radius: 999px;
+    padding: 4px 14px;
+  }
+
+  .num-accent {
+    background: linear-gradient(
+      135deg,
+      hsl(var(--accent)),
+      hsl(var(--accent2))
+    );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
   }
 }
