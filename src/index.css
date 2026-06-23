@@ -91,11 +91,39 @@
 }
 
 @layer base {
+  :root {
+    --ink: 20 14% 8%;
+    --cream: 40 38% 95%;
+    --lime: 80 95% 55%;
+    --tangerine: 18 100% 58%;
+    --cobalt: 232 90% 60%;
+    --lilac: 268 80% 72%;
+    --hot: 330 95% 62%;
+  }
+
   * {
     @apply border-border;
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground font-sans antialiased;
+    background-color: hsl(var(--ink));
+  }
+}
+
+@layer utilities {
+  .bento-card {
+    @apply relative overflow-hidden rounded-[28px] p-6 sm:p-7 transition-all duration-500 ease-out;
+    box-shadow: 0 1px 0 0 rgba(255, 255, 255, 0.06) inset;
+  }
+  .bento-card:hover {
+    transform: translateY(-6px);
+  }
+  .grain {
+    background-image: radial-gradient(
+      rgba(0, 0, 0, 0.045) 1px,
+      transparent 1px
+    );
+    background-size: 4px 4px;
   }
 }
