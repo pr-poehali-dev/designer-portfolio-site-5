@@ -44,18 +44,6 @@ const education = [
   { title: 'Skillbox', sub: 'Профессия Product Designer', year: '2022' },
 ];
 
-const reviews = [
-  {
-    text: 'Анна глубоко погружается в задачу и мыслит как продакт, а не просто рисует экраны. Результат превзошёл ожидания.',
-    name: 'Дмитрий К.',
-    role: 'CPO, IT-компания',
-  },
-  {
-    text: 'Сделала редизайн в срок, держала связь на каждом этапе. Метрики после релиза заметно выросли.',
-    name: 'Елена М.',
-    role: 'Маркетолог, B2B',
-  },
-];
 
 const useReveal = () => {
   const ref = useRef<HTMLDivElement>(null);
@@ -258,30 +246,6 @@ const Index = () => {
               ))}
             </div>
           </div>
-        </div>
-      </section>
-
-      {/* REVIEWS */}
-      <section className="mx-auto max-w-6xl px-5 py-20">
-        <div className="reveal mb-12">
-          <span className="text-sm font-semibold uppercase tracking-wider" style={{ color: accent }}>Отзывы</span>
-          <h2 className="mt-3 font-display text-3xl font-black tracking-tight sm:text-4xl">Что говорят клиенты</h2>
-        </div>
-        <div className="grid gap-6 md:grid-cols-2">
-          {reviews.map((r, i) => (
-            <div
-              key={r.name}
-              className="reveal rounded-[32px] border border-[hsl(var(--ink))]/10 bg-white p-8 sm:p-10"
-              style={{ transitionDelay: `${i * 0.1}s` }}
-            >
-              <Icon name="Quote" size={32} style={{ color: accent }} />
-              <p className="mt-5 text-lg leading-relaxed">{r.text}</p>
-              <div className="mt-6">
-                <div className="font-display font-bold">{r.name}</div>
-                <div className="text-sm text-[hsl(var(--muted-ink))]">{r.role}</div>
-              </div>
-            </div>
-          ))}
         </div>
       </section>
 
