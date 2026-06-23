@@ -1,6 +1,26 @@
 import { useEffect, useRef } from 'react';
 import Icon from '@/components/ui/icon';
 
+const scrollTo = (id: string) => {
+  const el = document.getElementById(id);
+  if (!el) return;
+  const top = el.getBoundingClientRect().top + window.scrollY - 72;
+  const start = window.scrollY;
+  const dist = top - start;
+  const duration = 900;
+  let startTime: number | null = null;
+
+  const ease = (t: number) => t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+
+  const step = (ts: number) => {
+    if (!startTime) startTime = ts;
+    const progress = Math.min((ts - startTime) / duration, 1);
+    window.scrollTo(0, start + dist * ease(progress));
+    if (progress < 1) requestAnimationFrame(step);
+  };
+  requestAnimationFrame(step);
+};
+
 const PHOTO =
   'https://cdn.poehali.dev/projects/d62806fd-b968-4116-8c13-a842d132dc5f/files/e10a4c04-197a-4964-9c4d-ba03ca29dad0.jpg';
 
@@ -79,17 +99,16 @@ const Index = () => {
         <div className="mx-auto flex max-w-6xl items-center justify-between px-5 py-4">
           <span className="font-display text-base font-extrabold tracking-tight">Анна Палиивец</span>
           <nav className="hidden gap-8 text-sm font-medium text-[hsl(var(--muted-ink))] md:flex">
-            <a href="#about" className="link-underline">Обо мне</a>
-            <a href="#cases" className="link-underline">Кейсы</a>
-            <a href="#education" className="link-underline">Образование</a>
-            <a href="#contacts" className="link-underline">Контакты</a>
+            {[['about','Обо мне'],['cases','Кейсы'],['education','Образование'],['contacts','Контакты']].map(([id, label]) => (
+              <button key={id} onClick={() => scrollTo(id)} className="link-underline cursor-pointer bg-transparent border-none p-0">{label}</button>
+            ))}
           </nav>
-          <a
-            href="#contacts"
-            className="rounded-full bg-[hsl(var(--ink))] px-5 py-2.5 text-sm font-semibold text-[hsl(var(--paper))] transition-transform hover:scale-105"
+          <button
+            onClick={() => scrollTo('contacts')}
+            className="rounded-full bg-[hsl(var(--ink))] px-5 py-2.5 text-sm font-semibold text-[hsl(var(--paper))] transition-transform hover:scale-105 cursor-pointer border-none"
           >
             Написать
-          </a>
+          </button>
         </div>
       </header>
 
@@ -111,18 +130,18 @@ const Index = () => {
               4+ года делаю сайты и приложения для B2B и B2C.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
-              <a
-                href="#cases"
-                className="rounded-full bg-[hsl(var(--ink))] px-7 py-3.5 text-sm font-semibold text-[hsl(var(--paper))] transition-transform hover:scale-105"
+              <button
+                onClick={() => scrollTo('cases')}
+                className="rounded-full bg-[hsl(var(--ink))] px-7 py-3.5 text-sm font-semibold text-[hsl(var(--paper))] transition-transform hover:scale-105 cursor-pointer border-none"
               >
                 Смотреть кейсы
-              </a>
-              <a
-                href="#contacts"
-                className="rounded-full border border-[hsl(var(--ink))]/20 px-7 py-3.5 text-sm font-semibold transition-colors hover:bg-[hsl(var(--soft))]"
+              </button>
+              <button
+                onClick={() => scrollTo('contacts')}
+                className="rounded-full border border-[hsl(var(--ink))]/20 px-7 py-3.5 text-sm font-semibold transition-colors hover:bg-[hsl(var(--soft))] cursor-pointer bg-transparent"
               >
                 Обсудить задачу
-              </a>
+              </button>
             </div>
           </div>
           <div className="reveal relative" style={{ transitionDelay: '0.15s' }}>
